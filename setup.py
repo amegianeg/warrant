@@ -1,19 +1,16 @@
 from setuptools import setup, find_packages
 
-# pip >= 10
-try: 
-    from pip._internal.req import parse_requirements
-# pip <= 9.0.3
-except ImportError: 
-    from pip.req import parse_requirements
-
-install_reqs = parse_requirements('requirements.txt', session=False)
-test_reqs = parse_requirements('requirements_test.txt', session=False)
-
 
 version = '0.6.1'
 
-README="""Python class to integrate Boto3's Cognito client so it is easy to login users. With SRP support."""
+README = """Python class to integrate Boto3's Cognito client so it is easy to login users. With SRP support."""
+
+
+with open('requirements.txt', 'r') as f:
+    requirements = f.read().splitlines()
+
+with open('requirements_test.txt', 'r') as f:
+    test_requirements = f.read().splitlines()
 
 setup(
     name='warrant',
@@ -33,10 +30,8 @@ setup(
     packages=find_packages(),
     url='https://github.com/capless/warrant',
     license='Apache License 2.0',
-    install_requires=[str(ir.req) for ir in install_reqs],
-    extras_require={
-        'test': [str(ir.req) for ir in test_reqs]
-    },
+    install_requires=requirements,
+    extras_require={'test': test_requirements},
     include_package_data=True,
     zip_safe=True,
 
